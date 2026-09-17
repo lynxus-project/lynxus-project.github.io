@@ -8,9 +8,9 @@ const features = [
 ];
 
 const pageTitle = 'Lynxus - Compile-time Java ORM | SQL mapping, made visible.';
-const pageDescription = 'Lynxus is an AOT-first compile-time Java ORM with explicit JDBC execution. Its generated path is suitable for applications targeting GraalVM Native Image or Spring Boot AOT, without requiring either.';
+const pageDescription = 'Lynxus is a compile-time Java ORM and pragmatic MyBatis alternative. It generates ordinary Mapper implementations at javac and executes them through explicit JDBC, with no runtime XML or OGNL.';
 const pageUrl = 'https://lynxus-project.github.io/';
-const socialImage = 'https://lynxus-project.github.io/img/lynxus-social-card.svg';
+const socialImage = 'https://lynxus-project.github.io/img/lynxus-social-card.png';
 ---
 <!doctype html>
 <html lang="en">
@@ -18,7 +18,7 @@ const socialImage = 'https://lynxus-project.github.io/img/lynxus-social-card.svg
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={pageDescription} />
-    <meta name="keywords" content="compile-time Java ORM, GraalVM Native Image Java ORM, MyBatis alternative compile-time, zero reflection JDBC Java, Spring Boot AOT ORM, Lynxus" />
+    <meta name="keywords" content="compile-time Java ORM, MyBatis alternative, compile-time SQL mapper, GraalVM Native Image Java ORM, Spring Boot 4 mapper, zero reflection JDBC Java, Lynxus" />
     <link rel="canonical" href={pageUrl} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Lynxus" />
@@ -26,7 +26,7 @@ const socialImage = 'https://lynxus-project.github.io/img/lynxus-social-card.svg
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={pageUrl} />
     <meta property="og:image" content={socialImage} />
-    <meta property="og:image:type" content="image/svg+xml" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Lynxus - Compile-time Java ORM. SQL mapping, made visible." />
@@ -47,7 +47,7 @@ const socialImage = 'https://lynxus-project.github.io/img/lynxus-social-card.svg
       codeRepository: 'https://github.com/lynxus-project/lynxus',
       programmingLanguage: 'Java',
       license: 'https://www.apache.org/licenses/LICENSE-2.0',
-      keywords: 'compile-time Java ORM, GraalVM Native Image, MyBatis alternative, JDBC',
+      keywords: 'compile-time Java ORM, MyBatis alternative, compile-time SQL mapper, JDBC, Spring Boot 4',
     })} />
   </head>
   <body>
@@ -60,8 +60,8 @@ const socialImage = 'https://lynxus-project.github.io/img/lynxus-social-card.svg
         <div class="hero-copy">
           <div class="stack-tags" aria-label="Lynxus technology stack"><span>JAVA</span><i>·</i><span>JDBC</span><i>·</i><span>COMPILE-TIME</span></div>
           <h1>Lynxus</h1>
-          <h2 class="hero-title">AOT-first Compile-time Java ORM.</h2>
-          <h3 class="slogan">SQL mapping, made visible. A generated path suitable for GraalVM Native Image and Spring Boot AOT, without runtime SQL interpretation.</h3>
+          <h2 class="hero-title">Compile-time Java ORM.</h2>
+          <h3 class="slogan">A pragmatic MyBatis alternative. javac generates ordinary Mapper implementations. No runtime XML. No OGNL.</h3>
           <div class="actions"><a class="button primary" href="/docs/user/getting-started/">Quick Start</a><a class="button ghost" href="https://github.com/lynxus-project/lynxus" target="_blank" rel="noopener noreferrer">View on GitHub</a></div>
         </div>
         <div class="signal-card" aria-label="Lynxus compile-time signal">
@@ -72,7 +72,7 @@ const socialImage = 'https://lynxus-project.github.io/img/lynxus-social-card.svg
         </div>
       </section>
       <section class="features"><p class="eyebrow">A SMALLER SURFACE AREA</p><h2>Make the SQL path obvious.</h2><div class="feature-grid">{features.map(([title, text], index) => <article><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
-      <section class="proof"><div><p class="eyebrow">AOT-FIRST BY DESIGN</p><h2>Compile once. Run with visible JDBC.</h2><p>Lynxus is a practical MyBatis alternative for teams that need compile-time SQL validation and a zero-reflection Java ORM path. It generates ordinary Java Mapper implementations during compilation, so Native Image consumers use the same code without runtime Mapper proxies or SQL interpreters.</p><a href="/docs/user/architecture/">Read the architecture guide →</a></div></section>
+      <section class="proof"><div><p class="eyebrow">AOT-FIRST BY DESIGN</p><h2>Compile once. Run with visible JDBC.</h2><p>Lynxus is a practical MyBatis alternative for people who write Mapper SQL today. It validates SQL at javac, writes a compile-time mapper index, and generates ordinary Java implementations. Startup loads that index instead of parsing XML or creating JDK proxies. Native Image consumers use the same generated path.</p><a href="/docs/user/architecture/">Read the architecture guide →</a></div></section>
     </main>
     <footer><span class="footer-brand"><img src="/img/lynxus-mark-light.svg" alt="" /> Lynxus</span><span>Apache-2.0 · Built for explicit Java systems · <a href="https://github.com/lynxus-project/lynxus" target="_blank" rel="noopener noreferrer">GitHub</a></span></footer>
   </body>

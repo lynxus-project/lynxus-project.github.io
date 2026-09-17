@@ -12,10 +12,21 @@ async function visit(directory) {
     if (entry.isDirectory()) await visit(path);
     else if (/\.(md|mdx)$/.test(entry.name)) {
       const source = await readFile(path, 'utf8');
-      const title = source.match(/^#\s+(.+)$/m)?.[1] ?? entry.name;
-      const urlPath = relative(docsRoot, path).replace(/\\/g, '/').replace(/\.(md|mdx)$/, '');
-      pages.push(`- [${title}](https://lynxus-project.github.io/docs/${urlPath})`);
-      documents.push({path, title, urlPath, source});
+      const title = source.match(/^title:\s*(.+)$/m)?.[1]?.trim()
+        ?? source.match(/^#\s+(.+)$/m)?.[1]
+        ?? entry.name;
+      const slug = source.match(/^slug:\s*(.+)$/m)?.[1]?.trim();
+      let urlPath;
+      if (slug) {
+        urlPath = slug.replace(/^\/+|\/+$/g, '');
+      } else {
+        urlPath = relative(docsRoot, path).replace(/\\/g, '/').replace(/\.(md|mdx)$/, '');
+        if (urlPath === 'index') urlPath = 'docs';
+        else urlPath = `docs/${urlPath.replace(/\/README$/, '')}`;
+      }
+      const href = `https://lynxus-project.github.io/${urlPath}/`;
+      pages.push(`- [${title}](${href})`);
+      documents.push({path, title, urlPath, source, href});
     }
   }
 }
@@ -36,9 +47,9 @@ await writeFile(resolve(siteRoot, 'public/llms-full.txt'), [
   'This machine-readable mirror is generated from the canonical Markdown in https://github.com/lynxus-project/lynxus/tree/main/docs.',
   'Use the linked HTML pages for navigation and the source repository for change history.',
   '',
-  ...documents.flatMap(({title, urlPath, source}) => [
+  ...documents.flatMap(({title, href, source}) => [
     `## ${title}`,
-    `Source: https://lynxus-project.github.io/docs/${urlPath}`,
+    `Source: ${href}`,
     '',
     source.trim(),
     '',
