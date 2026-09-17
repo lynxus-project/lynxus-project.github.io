@@ -143,6 +143,9 @@ for (const filename of ['robots.txt', '.nojekyll']) {
     await cp(resolve(siteRoot, 'static', filename), resolve(siteRoot, 'public', filename));
   }
 }
+if (existsSync(resolve(siteRoot, 'static/img/favicon.ico'))) {
+  await cp(resolve(siteRoot, 'static/img/favicon.ico'), resolve(siteRoot, 'public/favicon.ico'));
+}
 
 async function rewriteLinks(directory) {
   for (const entry of await readdir(directory, {withFileTypes: true})) {
@@ -162,10 +165,11 @@ async function rewriteLinks(directory) {
         const [pathPart, anchor = ''] = link.split('#', 2);
         const sourceTarget = resolve(sourceDocs, relative(targetDocs, dirname(path)), pathPart);
         const docsRelative = relative(sourceDocs, sourceTarget).replace(/\\/g, '/');
-        const repositoryPath = docsRelative.startsWith('../')
-          ? docsRelative.replace(/^(\.\.\/)+/, '')
-          : `docs/${docsRelative}`;
-        const sitePath = repositoryPath.replace(/^docs\//, '/docs/').replace(/\/README$/, '');
+        if (docsRelative.startsWith('../')) {
+          const repoRelative = relative(sourceRoot, sourceTarget).replace(/\\/g, '/');
+          return `](https://github.com/lynxus-project/lynxus/blob/main/${repoRelative}${anchor ? `#${anchor}` : ''})`;
+        }
+        const sitePath = `/docs/${docsRelative}`.replace(/\/README$/, '');
         return `](${sitePath}${anchor ? `#${anchor}` : ''})`;
       });
       const normalized = rewritten
