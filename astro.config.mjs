@@ -11,11 +11,11 @@ export default defineConfig({
   integrations: [starlight({
     title: 'Lynxus Docs',
     titleDelimiter: '-',
-    description: 'Compile-time Java ORM and pragmatic MyBatis alternative. Lynxus generates ordinary Mapper implementations at javac and executes them through explicit JDBC.',
+    description: 'AOT-first compile-time Java ORM and pragmatic MyBatis alternative. Lynxus generates ordinary Java Mappers at javac and executes them through explicit JDBC.',
     favicon: '/img/lynxus-favicon.svg',
     social: [{icon: 'github', label: 'GitHub', href: 'https://github.com/lynxus-project/lynxus'}],
     defaultLocale: 'root',
-    locales: {root: {label: 'English', lang: 'en'}, 'zh-CN': {label: '简体中文', lang: 'zh-CN'}},
+    locales: {root: {label: 'English', lang: 'en'}},
     sidebar: [
       {label: 'Start here', items: ['docs', 'docs/user/getting-started', 'docs/user/architecture', ...contributeItem]},
       {label: 'Core', items: ['docs/user/core', 'docs/user/core/mapping', 'docs/user/core/extensions', 'docs/user/core/standalone']},
@@ -31,15 +31,14 @@ export default defineConfig({
     pagination: true,
     lastUpdated: true,
     head: [
-      {tag: 'meta', attrs: {name: 'keywords', content: 'compile-time Java ORM, MyBatis alternative, compile-time SQL mapper, GraalVM Native Image Java ORM, Spring Boot 4 mapper, zero reflection JDBC Java, Lynxus'}},
       {tag: 'meta', attrs: {property: 'og:image', content: 'https://lynxus-project.github.io/img/lynxus-social-card.png'}},
       {tag: 'meta', attrs: {property: 'og:image:type', content: 'image/png'}},
       {tag: 'meta', attrs: {property: 'og:image:width', content: '1200'}},
       {tag: 'meta', attrs: {property: 'og:image:height', content: '630'}},
-      {tag: 'meta', attrs: {property: 'og:image:alt', content: 'Lynxus - Compile-time Java ORM. SQL mapping, made visible.'}},
+      {tag: 'meta', attrs: {property: 'og:image:alt', content: 'Lynxus - AOT-first Compile-time Java ORM.'}},
       {tag: 'meta', attrs: {name: 'twitter:card', content: 'summary_large_image'}},
       {tag: 'meta', attrs: {name: 'twitter:image', content: 'https://lynxus-project.github.io/img/lynxus-social-card.png'}},
-      {tag: 'meta', attrs: {name: 'twitter:image:alt', content: 'Lynxus - Compile-time Java ORM. SQL mapping, made visible.'}},
+      {tag: 'meta', attrs: {name: 'twitter:image:alt', content: 'Lynxus - AOT-first Compile-time Java ORM.'}},
     ],
   })],
 });

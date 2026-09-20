@@ -1,6 +1,8 @@
-# Lynxus documentation site
+# Lynxus: AOT-first Compile-time Java ORM
 
-The site is built with Astro and Starlight and deployed by GitHub Actions to GitHub Pages.
+This is the public documentation site for Lynxus, an AOT-first compile-time Java ORM and pragmatic
+MyBatis alternative. The site is built with Astro and Starlight and deployed by GitHub Actions to
+GitHub Pages.
 The `lynxus` code repository is the single canonical owner of technical Markdown.
 This repository owns only presentation, navigation, theme, and build configuration.
 The workflow checks out the selected ref and builds a Pages artifact without committing

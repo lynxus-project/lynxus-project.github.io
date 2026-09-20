@@ -42,7 +42,7 @@ slug: docs
   <img src="/assets/lynxus-logo.svg" width="360" alt="Lynxus logo">
 </p>
 
-Lynxus generates ordinary Java Mapper implementations at compile time and executes them through a fixed, explicit JDBC lifecycle. Start with the architecture below, then expand into the chapter that matches your task.
+Lynxus is an AOT-first compile-time Java ORM. It generates ordinary Java Mapper implementations at compile time and executes them through a fixed, explicit JDBC lifecycle. Start with the architecture below, then expand into the chapter that matches your task.
 
 ![Lynxus compile-time and runtime architecture](/assets/lynxus-architecture.svg)
 

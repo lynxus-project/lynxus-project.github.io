@@ -2,6 +2,48 @@
 import Default from '@astrojs/starlight/components/Head.astro';
 
 const is404 = Astro.url.pathname.includes('404');
+const {entry} = Astro.locals.starlightRoute;
+const pageTitle = entry.data.title;
+const pageDescription = entry.data.description
+  ?? 'AOT-first compile-time Java ORM and pragmatic MyBatis alternative for explicit Java and JDBC systems.';
+const pageUrl = Astro.url.href;
+const socialImage = 'https://lynxus-project.github.io/img/lynxus-social-card.png';
+const organizationLogo = 'https://lynxus-project.github.io/img/lynxus-mark.svg';
+const organizationId = 'https://lynxus-project.github.io/#organization';
 ---
 <Default><slot /></Default>
+<meta name="author" content="Lynxus" />
+<meta name="twitter:title" content={`${pageTitle} - Lynxus Docs`} />
+<meta name="twitter:description" content={pageDescription} />
+<script type="application/ld+json" is:inline set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': organizationId,
+      name: 'Lynxus',
+      url: 'https://lynxus-project.github.io/',
+      logo: organizationLogo,
+      sameAs: ['https://github.com/lynxus-project/lynxus'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://lynxus-project.github.io/#website',
+      name: 'Lynxus',
+      url: 'https://lynxus-project.github.io/',
+      publisher: {'@id': organizationId},
+    },
+    {
+      '@type': 'TechArticle',
+      '@id': `${pageUrl}#article`,
+      headline: pageTitle,
+      description: pageDescription,
+      url: pageUrl,
+      isPartOf: {'@id': 'https://lynxus-project.github.io/#website'},
+      publisher: {'@id': organizationId},
+      image: socialImage,
+      inLanguage: Astro.locals.starlightRoute.lang,
+    },
+  ],
+})} />
 {is404 && <meta name="robots" content="noindex, nofollow" />}
