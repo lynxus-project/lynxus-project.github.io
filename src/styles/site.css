@@ -450,6 +450,13 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
 .foot a:hover{color:var(--text)}
 
 /* ---------- responsive ---------- */
+/* Desktop: the first screen is exactly one viewport (nav + hero + tech strip). */
+@media (min-width:900px){
+  .first-screen{display:flex;flex-direction:column;min-height:calc(100vh - 69px);min-height:calc(100svh - 69px)}
+  .first-screen > .hero{flex:1;min-height:0;display:flex;align-items:center;padding-top:48px;padding-bottom:56px}
+  .first-screen > .hero > .wrap{width:100%}
+}
+
 /* Large screens: grow the frame instead of leaving the design as a narrow column. */
 @media (min-width:1600px){
   :root{--max:1360px}
