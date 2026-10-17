@@ -460,7 +460,7 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
 }
 
 /* Desktop with enough height: every section owns one screen. */
-@media (min-width:900px) and (min-height:900px){
+@media (min-width:900px){
   .section{
     display:flex;flex-direction:column;justify-content:center;
     min-height:calc(100vh - 69px);min-height:calc(100svh - 69px);
