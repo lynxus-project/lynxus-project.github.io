@@ -1,14 +1,8 @@
 ---
 import '../styles/site.css';
 
-const features = [
-  ['Compile-time first', 'SQL, parameters, and result shapes are checked before runtime.'],
-  ['Explicit JDBC', 'Generated Mappers call one small executor contract.'],
-  ['Spring-ready', 'DataSource domains and transactions stay under Spring ownership.'],
-];
-
 const pageTitle = 'Lynxus | AOT-first Compile-time Java ORM';
-const pageDescription = 'Lynxus is an AOT-first compile-time Java ORM and pragmatic MyBatis alternative. Generate ordinary Java Mappers at javac and run them through explicit JDBC.';
+const pageDescription = 'Lynxus is an AOT-first compile-time Java ORM and pragmatic MyBatis alternative. javac validates your SQL, generates ordinary Mapper classes, and runtime is explicit JDBC.';
 const pageUrl = 'https://lynxus-project.github.io/';
 const socialImage = 'https://lynxus-project.github.io/img/lynxus-social-card.png';
 const organizationLogo = 'https://lynxus-project.github.io/img/lynxus-mark.svg';
@@ -17,9 +11,10 @@ const organizationLogo = 'https://lynxus-project.github.io/img/lynxus-mark.svg';
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={pageDescription} />
     <meta name="google-site-verification" content="hy83BK4I2b-My79FLc36tZ0K9DBH_aZTyevBFSTOYso" />
+    <meta name="theme-color" content="#04070d" />
     <link rel="canonical" href={pageUrl} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Lynxus" />
@@ -38,7 +33,11 @@ const organizationLogo = 'https://lynxus-project.github.io/img/lynxus-mark.svg';
     <meta name="twitter:image" content={socialImage} />
     <meta name="twitter:image:alt" content="Lynxus - AOT-first Compile-time Java ORM." />
     <link rel="icon" type="image/svg+xml" href="/img/lynxus-mark.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     <title>{pageTitle}</title>
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <script type="application/ld+json" is:inline set:html={JSON.stringify({
       '@context': 'https://schema.org',
       '@graph': [
@@ -77,29 +76,470 @@ const organizationLogo = 'https://lynxus-project.github.io/img/lynxus-mark.svg';
     })} />
   </head>
   <body>
-    <header class="site-header">
-      <a class="brand" href="/"><img src="/img/lynxus-mark-light.svg" alt="" /> Lynxus</a>
-      <nav><a href="/docs">Docs</a><a href="/docs/user/spring/spring-boot">Spring Boot</a><a href="https://github.com/lynxus-project/lynxus" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav>
-    </header>
-    <main>
-      <section class="hero">
-        <div class="hero-copy">
-          <div class="stack-tags" aria-label="Lynxus technology stack"><span>JAVA</span><i>·</i><span>JDBC</span><i>·</i><span>COMPILE-TIME</span></div>
-          <h1>Lynxus</h1>
-          <h2 class="hero-title">AOT-first Compile-time Java ORM.</h2>
-          <h3 class="slogan">A pragmatic MyBatis alternative. javac generates ordinary Mapper implementations. No runtime XML. No OGNL.</h3>
-          <div class="actions"><a class="button primary" href="/docs/user/getting-started/">Quick Start</a><a class="button ghost" href="https://github.com/lynxus-project/lynxus" target="_blank" rel="noopener noreferrer">View on GitHub</a></div>
+
+<div class="scroll-progress" id="progress" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/" aria-label="Lynxus home">
+      <img src="/img/lynxus-mark-light.svg" alt="" width="22" height="22" /> Lynxus
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#compare">Compare</a>
+      <a href="/docs">Docs</a>
+      <a class="nav-cta" href="/docs/user/getting-started/">
+        Get started
+        <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span></button>
+    </nav>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#how">How it works <span aria-hidden="true">↗</span></a>
+    <a href="#compare">Compare <span aria-hidden="true">↗</span></a>
+    <a href="/docs">Docs <span aria-hidden="true">↗</span></a>
+    <a href="/docs/user/getting-started/">Get started <span aria-hidden="true">→</span></a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="kicker"><i></i>AOT-first · Java 21 · Apache-2.0</span>
+        <h1>Fails at <span class="mono">javac</span>.<br />Not at <em>3&nbsp;a.m.</em></h1>
+        <p class="lede">Lynxus is a pragmatic MyBatis alternative. Your SQL is validated at compile time, your mappers become <b>ordinary Java classes</b>, and runtime is one explicit JDBC contract.</p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="/docs/user/getting-started/">
+            Quick start
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/lynxus-project/lynxus" target="_blank" rel="noopener noreferrer">View on GitHub</a>
         </div>
-        <div class="signal-card" aria-label="Lynxus compile-time signal">
-          <div class="signal-glow"></div><div class="signal-orbit orbit-one"></div><div class="signal-orbit orbit-two"></div>
-          <div class="signal-core"><img src="/img/lynxus-mark-light.svg" alt="Lynxus logo" /><small>Lynxus</small></div>
-          <div class="signal-chip chip-top">COMPILE-TIME <b>✓</b></div><div class="signal-chip chip-right">AOT native</div><div class="signal-chip chip-bottom">JDBC lifecycle</div>
-          <div class="signal-lines"><span></span><span></span><span></span></div>
+
+        <div class="install">
+          <span class="pfx">MAVEN</span>
+          <code><span class="grp">io.github.lynxus:</span>lynxus-spring-boot-starter</code>
+          <button class="copy" data-copy="<dependency><groupId>io.github.lynxus</groupId><artifactId>lynxus-spring-boot-starter</artifactId><version>1.0.0-SNAPSHOT</version></dependency>" aria-label="Copy Maven dependency">
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M10.5 5.5V3.9c0-.5-.4-.9-.9-.9H3.9c-.5 0-.9.4-.9.9v5.7c0 .5.4.9.9.9h1.6" stroke="currentColor" stroke-width="1.2"/></svg>
+            <span>Copy</span>
+          </button>
         </div>
-      </section>
-      <section class="features"><p class="eyebrow">A SMALLER SURFACE AREA</p><h2>Make the SQL path obvious.</h2><div class="feature-grid">{features.map(([title, text], index) => <article><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div></section>
-      <section class="proof"><div><p class="eyebrow">AOT-FIRST BY DESIGN</p><h2>Compile once. Run with visible JDBC.</h2><p>Lynxus is a practical MyBatis alternative for people who write Mapper SQL today. It validates SQL at javac, writes a compile-time mapper index, and generates ordinary Java implementations. Startup loads that index instead of parsing XML or creating JDK proxies. Native Image consumers use the same generated path.</p><a href="/docs/user/aot/">See the AOT and Native Image guide →</a></div></section>
-    </main>
-    <footer><span class="footer-brand"><img src="/img/lynxus-mark-light.svg" alt="" /> Lynxus</span><span>Apache-2.0 · Built for explicit Java systems · <a href="https://github.com/lynxus-project/lynxus" target="_blank" rel="noopener noreferrer">GitHub</a></span></footer>
+
+        <div class="trust">
+          <span><b>✓</b> No runtime XML</span>
+          <span><b>✓</b> No OGNL</span>
+          <span><b>✓</b> No JDK proxies</span>
+        </div>
+      </div>
+
+      <div class="stage-wrap">
+        <div class="stage-glow" aria-hidden="true"></div>
+        <figure class="stage" id="stage" data-phase="read">
+          <div class="stage-top">
+            <span class="win-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="stage-root">lynxus-example</span>
+            <span class="pill" id="pill" data-tone="ok">0 problems</span>
+            <button class="replay" id="replay" type="button" aria-label="Replay the compile animation">↻</button>
+          </div>
+          <div class="stage-tabs" role="tablist" aria-label="Build output">
+            <button role="tab" id="tab-mapper" aria-selected="true" aria-controls="pane-mapper" data-tab="mapper">UserMapper.java</button>
+            <button role="tab" id="tab-impl" aria-selected="false" aria-controls="pane-impl" data-tab="impl" tabindex="-1">UserMapperImpl.java</button>
+          </div>
+          <div class="stage-body">
+            <pre class="code" id="pane-mapper" data-pane="mapper" role="tabpanel" aria-labelledby="tab-mapper"><span class="ln"><span class="k">package</span> com.example.user;</span><span class="ln"></span><span class="ln"><span class="k">import</span> io.github.lynxus.annotation.<span class="p">*</span>;</span><span class="ln"></span><span class="ln"><span class="a">@Mapper</span></span><span class="ln"><span class="k">public interface</span> <span class="t">UserMapper</span> &#123;</span><span class="ln"></span><span class="ln" data-err>  <span class="a">@Select</span>(<span class="s">"SELECT id, name FROM users WHERE id = <span class="p">#&#123;<span class="tok-bad">userId</span><span class="tok-fixed">id</span>&#125;</span>"</span>)</span><span class="ln">  <span class="t">User</span> <span class="fn">findById</span>(<span class="a">@Param</span>(<span class="s">"id"</span>) <span class="t">Long</span> id);</span><span class="ln"></span><span class="ln">  <span class="a">@Insert</span>(<span class="s">"""</span></span><span class="ln"><span class="s">      INSERT INTO users (id, name)</span></span><span class="ln"><span class="s">      VALUES (<span class="p">#&#123;id&#125;</span>, <span class="p">#&#123;name&#125;</span>)"""</span>)</span><span class="ln">  <span class="k">int</span> <span class="fn">insert</span>(<span class="a">@Param</span>(<span class="s">"id"</span>) <span class="t">Long</span> id, <span class="a">@Param</span>(<span class="s">"name"</span>) <span class="t">String</span> name);</span><span class="ln">&#125;</span></pre>
+            <pre class="code" id="pane-impl" data-pane="impl" role="tabpanel" aria-labelledby="tab-impl" hidden><span class="ln"><span class="k">final class</span> <span class="t">UserMapperImpl</span> <span class="k">implements</span> <span class="t">UserMapper</span> &#123;</span><span class="ln">  <span class="k">private final</span> <span class="t">SqlExecutor</span> executor;</span><span class="ln"></span><span class="ln">  <span class="t">UserMapperImpl</span>(<span class="t">SqlExecutor</span> executor) &#123;</span><span class="ln">    <span class="k">this</span>.executor = executor;</span><span class="ln">  &#125;</span><span class="ln"></span><span class="ln">  <span class="a">@Override</span></span><span class="ln">  <span class="k">public</span> <span class="t">User</span> <span class="fn">findById</span>(<span class="t">Long</span> id) &#123;</span><span class="ln">    <span class="k">return</span> executor.query(FIND_BY_ID.bind(id)).oneOrNull();</span><span class="ln">  &#125;</span><span class="ln"></span><span class="ln">  <span class="k">private static final</span> <span class="t">QueryDefinition</span>&lt;<span class="t">User</span>&gt; FIND_BY_ID =</span><span class="ln">      QueryDefinition.<span class="fn">assembled</span>(</span><span class="ln">          <span class="s">"UserMapper#findById"</span>, SQL, ROW_MAPPER);</span><span class="ln">&#125;</span></pre>
+          </div>
+          <div class="stage-foot">
+            <span class="status"><i aria-hidden="true"></i><span id="status">ready · annotation processor enabled</span></span>
+            <span class="stepcount" id="stepcount">1 / 6</span>
+          </div>
+          <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+        </figure>
+        <p class="stage-caption"><span class="dot" aria-hidden="true"></span>A mistyped parameter is a <b>build error</b>, not a production incident.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip" aria-label="Technology">
+    <div class="strip-inner">
+      <span><b>JAVA 21</b></span><span class="sep">/</span>
+      <span><b>ANNOTATION PROCESSING</b></span><span class="sep">/</span>
+      <span><b>EXPLICIT JDBC</b></span><span class="sep">/</span>
+      <span><b>SPRING BOOT</b></span><span class="sep">/</span>
+      <span><b>GRAALVM NATIVE</b></span><span class="sep">/</span>
+      <span><b>APACHE-2.0</b></span>
+    </div>
+  </div>
+
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow"><span>01</span> How it works</p>
+        <h2>Four moves. No runtime ceremony.</h2>
+        <p class="sub">The mapper stays the source of truth. Everything else — validation, implementations, the mapper index — is produced by javac.</p>
+      </div>
+
+      <div class="pipe reveal">
+        <ol class="rail" role="tablist" aria-label="Compilation stages">
+          <li><button class="step" role="tab" aria-selected="true" data-step="0">
+            <span class="num">01</span>
+            <span><span class="ttl">Annotate</span><span class="desc">SQL lives next to the method that runs it.</span></span>
+          </button></li>
+          <li><button class="step" role="tab" aria-selected="false" data-step="1" tabindex="-1">
+            <span class="num">02</span>
+            <span><span class="ttl">Check</span><span class="desc">javac parses SQL and checks every binding.</span></span>
+          </button></li>
+          <li><button class="step" role="tab" aria-selected="false" data-step="2" tabindex="-1">
+            <span class="num">03</span>
+            <span><span class="ttl">Generate</span><span class="desc">The processor writes plain Java classes.</span></span>
+          </button></li>
+          <li><button class="step" role="tab" aria-selected="false" data-step="3" tabindex="-1">
+            <span class="num">04</span>
+            <span><span class="ttl">Run</span><span class="desc">Startup reads the index. Calls hit JDBC.</span></span>
+          </button></li>
+        </ol>
+
+        <div class="pipe-stage">
+          <div class="pipe-bar">
+            <span class="file" id="pipeFile">UserMapper.java</span>
+            <span class="tag" id="pipeTag">source</span>
+          </div>
+          <div class="pipe-code">
+            <pre class="code panel" data-panel="0"><span class="ln"><span class="k">package</span> com.example.user;</span><span class="ln"></span><span class="ln"><span class="a">@Mapper</span></span><span class="ln"><span class="k">public interface</span> <span class="t">UserMapper</span> &#123;</span><span class="ln"></span><span class="ln">  <span class="a">@Select</span>(<span class="s">"SELECT id, name FROM users WHERE id = <span class="p">#&#123;<span class="tok-bad">userId</span><span class="tok-fixed">id</span>&#125;</span>"</span>)</span><span class="ln">  <span class="t">User</span> <span class="fn">findById</span>(<span class="a">@Param</span>(<span class="s">"id"</span>) <span class="t">Long</span> id);</span><span class="ln"></span><span class="ln">  <span class="a">@Insert</span>(<span class="s">"INSERT INTO users (id, name) VALUES (<span class="p">#&#123;id&#125;</span>, <span class="p">#&#123;name&#125;</span>)"</span>)</span><span class="ln">  <span class="k">int</span> <span class="fn">insert</span>(<span class="a">@Param</span>(<span class="s">"id"</span>) <span class="t">Long</span> id, <span class="a">@Param</span>(<span class="s">"name"</span>) <span class="t">String</span> name);</span><span class="ln">&#125;</span></pre>
+            <pre class="code panel term" data-panel="1" hidden><span class="ln"><span class="cmd">$ <b>mvn -q compile</b></span></span><span class="ln"></span><span class="ln"><span class="muted">[lynxus]</span> 1 mapper interface <span class="pad">·</span> 2 statements</span><span class="ln"><span class="muted">[lynxus]</span> UserMapper#findById</span><span class="ln">         SQL parsed <span class="pad">·</span> 1 bound parameter: id</span><span class="ln">         result mapping: User <span class="pad">←</span> id, name</span><span class="ln"></span><span class="ln"><span class="muted">[lynxus]</span> wrote UserMapperImpl.java</span><span class="ln"><span class="muted">[lynxus]</span> wrote META-INF/lynxus/mapper-index.json</span><span class="ln"></span><span class="ln"><span class="ok">BUILD SUCCESS</span>  <span class="pad">0.41s</span></span></pre>
+            <pre class="code panel" data-panel="2" hidden><span class="ln"><span class="k">final class</span> <span class="t">UserMapperImpl</span> <span class="k">implements</span> <span class="t">UserMapper</span> &#123;</span><span class="ln"></span><span class="ln">  <span class="k">private final</span> <span class="t">SqlExecutor</span> executor;</span><span class="ln"></span><span class="ln">  <span class="a">@Override</span></span><span class="ln">  <span class="k">public</span> <span class="t">User</span> <span class="fn">findById</span>(<span class="t">Long</span> id) &#123;</span><span class="ln">    <span class="k">return</span> executor.query(FIND_BY_ID.bind(id)).oneOrNull();</span><span class="ln">  &#125;</span><span class="ln"></span><span class="ln">  <span class="k">private static final</span> <span class="t">QueryDefinition</span>&lt;<span class="t">User</span>&gt; FIND_BY_ID =</span><span class="ln">      QueryDefinition.<span class="fn">assembled</span>(</span><span class="ln">          <span class="s">"UserMapper#findById"</span>, SQL, ROW_MAPPER);</span><span class="ln">&#125;</span></pre>
+            <pre class="code panel" data-panel="3" hidden><span class="ln"><span class="k">var</span> executor = JdbcAssembly.<span class="fn">create</span>(dataSource);</span><span class="ln"><span class="k">var</span> mapper = <span class="k">new</span> <span class="t">UserMapperImpl</span>(executor);</span><span class="ln"></span><span class="ln"><span class="t">User</span> user = mapper.<span class="fn">findById</span>(42L);</span><span class="ln"></span><span class="ln"><span class="c">// → PreparedStatement.executeQuery()</span></span><span class="ln"><span class="c">// no proxy · no XML · no reflection</span></span></pre>
+          </div>
+          <p class="pipe-note" id="pipeNote">SQL sits next to the method that uses it — no XML file to hunt down, no namespace to keep in sync.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="compare">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow"><span>02</span> Side by side</p>
+        <h2>Same query. One fails before your app starts.</h2>
+        <p class="sub">The migration is mostly deletion: the XML goes away, the runtime parser goes away, and the mapper you already wrote stays.</p>
+      </div>
+
+      <div class="cmp reveal">
+        <article class="pane before">
+          <div class="pane-head">
+            <span class="pane-tag">BEFORE</span>
+            <h3>MyBatis</h3>
+            <span class="chip warn">runtime work</span>
+          </div>
+          <pre class="code"><span class="ln" data-l="1"><span class="c">&lt;!-- resources/mapper/UserMapper.xml --&gt;</span></span><span class="ln" data-l="2">&lt;<span class="t">mapper</span> namespace=<span class="s">"com.example.UserMapper"</span>&gt;</span><span class="ln" data-l="3">  &lt;<span class="t">select</span> id=<span class="s">"findById"</span> resultType=<span class="s">"User"</span>&gt;</span><span class="ln" data-l="4">    SELECT id, name FROM users</span><span class="ln" data-l="5">    &lt;<span class="t">where</span>&gt;</span><span class="ln" data-l="6">      &lt;<span class="t">if</span> test=<span class="s">"id != null"</span>&gt;AND id = <span class="p">#&#123;id&#125;</span>&lt;/<span class="t">if</span>&gt;</span><span class="ln" data-l="7">    &lt;/<span class="t">where</span>&gt;</span><span class="ln" data-l="8">  &lt;/<span class="t">select</span>&gt;</span><span class="ln" data-l="9">&lt;/<span class="t">mapper</span>&gt;</span></pre>
+          <div class="pane-stat"><span><b>2</b> files</span><span><b>1</b> XML parse</span><span><b>1</b> proxy</span></div>
+          <ul class="pane-facts">
+            <li><button class="fact-btn" data-lights="1,2">XML parsed at startup</button></li>
+            <li><button class="fact-btn" data-lights="5,6,7">OGNL evaluated per dynamic tag</button></li>
+            <li><button class="fact-btn" data-lights="3">JDK proxy per mapper</button></li>
+          </ul>
+        </article>
+
+        <div class="vs" aria-hidden="true">VS</div>
+
+        <article class="pane after">
+          <div class="pane-head">
+            <span class="pane-tag">AFTER</span>
+            <h3>Lynxus</h3>
+            <span class="chip good">compile-time</span>
+          </div>
+          <pre class="code"><span class="ln" data-l="1"><span class="a">@Mapper</span></span><span class="ln" data-l="2"><span class="k">public interface</span> <span class="t">UserMapper</span> &#123;</span><span class="ln" data-l="3"></span><span class="ln" data-l="4">  <span class="a">@Select</span>(<span class="s">"SELECT id, name FROM users WHERE id = <span class="p">#&#123;id&#125;</span>"</span>)</span><span class="ln" data-l="5">  <span class="t">User</span> <span class="fn">findById</span>(<span class="a">@Param</span>(<span class="s">"id"</span>) <span class="t">Long</span> id);</span><span class="ln" data-l="6">&#125;</span></pre>
+          <div class="pane-stat"><span><b>1</b> file</span><span><b class="good">0</b> XML parse</span><span><b class="good">0</b> proxies</span></div>
+          <ul class="pane-facts">
+            <li><button class="fact-btn" data-lights="1,4,5">SQL checked by javac</button></li>
+            <li><button class="fact-btn" data-lights="2">One generated, plain class</button></li>
+            <li><button class="fact-btn" data-lights="4">Index lookup at boot</button></li>
+          </ul>
+        </article>
+      </div>
+      <p class="cmp-foot reveal">Same SQL. Same result. <b>One of them fails before your app starts.</b></p>
+    </div>
+  </section>
+
+  <section class="section" id="facts">
+    <div class="wrap facts-grid">
+      <div class="reveal">
+        <p class="eyebrow"><span>03</span> What is not there</p>
+        <h2>Less machinery. Fewer surprises.</h2>
+        <p class="sub">No parser to boot, no expression language to debug, no proxies to explain in a stack trace. Startup reads a generated index; every call is a prepared statement and a row mapper you can open in your IDE.</p>
+        <a class="text-link" href="/docs/user/aot/">AOT &amp; Native Image guide <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="numbers reveal">
+        <div class="num-cell"><b>0</b><span>XML files parsed at startup</span></div>
+        <div class="num-cell"><b>0</b><span>OGNL expressions evaluated</span></div>
+        <div class="num-cell"><b>0</b><span>JDK proxies per mapper</span></div>
+        <div class="num-cell"><b>1</b><span>executor contract to implement</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="wrap inner">
+      <p class="eyebrow" style="justify-content:center"><span>04</span> Get started</p>
+      <h2>Point javac at your SQL.</h2>
+      <p>Java 21, one dependency, and a mapper you already know how to write.</p>
+      <div class="install">
+        <span class="pfx">MAVEN</span>
+        <code><span class="grp">io.github.lynxus:</span>lynxus-spring-boot-starter</code>
+        <button class="copy" data-copy="<dependency><groupId>io.github.lynxus</groupId><artifactId>lynxus-spring-boot-starter</artifactId><version>1.0.0-SNAPSHOT</version></dependency>" aria-label="Copy Maven dependency">
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M10.5 5.5V3.9c0-.5-.4-.9-.9-.9H3.9c-.5 0-.9.4-.9.9v5.7c0 .5.4.9.9.9h1.6" stroke="currentColor" stroke-width="1.2"/></svg>
+          <span>Copy</span>
+        </button>
+      </div>
+      <div class="doc-links">
+        <a class="doc-link" href="/docs/user/getting-started/">
+          <span class="t">Quick start <span aria-hidden="true">→</span></span>
+          <span class="d">Mapper, assembly, first query.</span>
+        </a>
+        <a class="doc-link" href="/docs/user/migration/from-mybatis/">
+          <span class="t">Migrate from MyBatis <span aria-hidden="true">→</span></span>
+          <span class="d">Move XML mappers without a rewrite.</span>
+        </a>
+        <a class="doc-link" href="/docs/user/aot/">
+          <span class="t">AOT &amp; Native Image <span aria-hidden="true">→</span></span>
+          <span class="d">The same generated path, closed-world.</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="brand"><img src="/img/lynxus-mark-light.svg" alt="" width="16" height="16" /> Lynxus</span>
+    <span>Apache-2.0 · Built for explicit Java systems</span>
+    <span class="right">
+      <a href="/docs">Docs</a>
+      <a href="https://github.com/lynxus-project/lynxus" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    </span>
+  </div>
+</footer>
+
+    <script is:inline>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover)').matches;
+
+  /* ---------- nav ---------- */
+  const nav = $('#nav');
+  const bar = $('#progress');
+  const onScroll = () => {
+    const y = window.scrollY || 0;
+    nav.classList.toggle('stuck', y > 8);
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (h > 0 ? Math.min(1, y / h) * 100 : 0) + '%';
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const menuBtn = $('#menuBtn');
+  menuBtn.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  $$('#mobileMenu a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  }));
+  addEventListener('keydown', e => {
+    if (e.key === 'Escape' && nav.classList.contains('open')) {
+      nav.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.focus();
+    }
+  });
+
+  /* ---------- pointer spotlight ---------- */
+  const hero = $('.hero');
+  if (canHover && !reduce) {
+    hero.addEventListener('pointermove', e => {
+      const r = hero.getBoundingClientRect();
+      hero.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      hero.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  }
+
+  /* ---------- copy ---------- */
+  const copyText = async (text) => {
+    try { await navigator.clipboard.writeText(text); return true; }
+    catch {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand('copy'); ta.remove(); return ok;
+    }
+  };
+  $$('.copy').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const ok = await copyText(btn.dataset.copy || '');
+      const label = btn.querySelector('span');
+      const prev = label.textContent;
+      btn.classList.add('copied');
+      label.textContent = ok ? 'Copied' : 'Press ⌘C';
+      clearTimeout(btn._t);
+      btn._t = setTimeout(() => { btn.classList.remove('copied'); label.textContent = prev; }, 1800);
+    });
+  });
+
+  /* ---------- build stage ---------- */
+  const stage = $('#stage');
+  const statusEl = $('#status');
+  const pill = $('#pill');
+  const stepcount = $('#stepcount');
+  const progressBar = $('#bar');
+  const tabs = $$('.stage-tabs [role="tab"]');
+  const panes = { mapper: $('#pane-mapper'), impl: $('#pane-impl') };
+
+  const PHASES = [
+    { id: 'read',     status: 'ready · annotation processor enabled', pill: '0 problems', tone: 'ok',    tab: 'mapper', step: 1, at: 0 },
+    { id: 'validate', status: 'validating SQL and bindings…',        pill: 'checking…',  tone: 'check', tab: 'mapper', step: 2, at: 18 },
+    { id: 'error',    status: "error: unknown parameter 'userId' · line 8", pill: '1 error',    tone: 'bad',   tab: 'mapper', step: 3, at: 38 },
+    { id: 'fix',      status: '1 error fixed · recompiling',           pill: '0 problems', tone: 'check', tab: 'mapper', step: 4, at: 55 },
+    { id: 'generate', status: 'writing UserMapperImpl.java…',          pill: '0 problems', tone: 'ok',    tab: 'impl',   step: 5, at: 78 },
+    { id: 'done',     status: 'BUILD SUCCESS · 0 errors · 1 class',    pill: 'compiled ✓', tone: 'ok',    tab: 'impl',   step: 6, at: 100 }
+  ];
+
+  let timers = [];
+  let userTookOver = false;
+
+  const selectTab = (name, focus = false) => {
+    tabs.forEach(t => {
+      const on = t.dataset.tab === name;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      if (on && focus) t.focus();
+    });
+    Object.entries(panes).forEach(([k, p]) => { p.hidden = k !== name; });
+  };
+
+  const apply = (i) => {
+    const p = PHASES[i];
+    stage.dataset.phase = p.id;
+    statusEl.textContent = p.status;
+    pill.textContent = p.pill;
+    pill.dataset.tone = p.tone;
+    stepcount.textContent = p.step + ' / 6';
+    progressBar.style.width = p.at + '%';
+    selectTab(p.tab);
+  };
+
+  const stop = () => { timers.forEach(clearTimeout); timers = []; };
+
+  const play = () => {
+    stop();
+    userTookOver = false;
+    apply(0);
+    const gaps = [1100, 1500, 2100, 1250, 1700];
+    let acc = 0;
+    gaps.forEach((gap, idx) => {
+      acc += gap;
+      timers.push(setTimeout(() => {
+        apply(idx + 1);
+        if (idx === gaps.length - 1) { /* hold the final frame */ }
+      }, acc));
+    });
+  };
+
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    stop(); userTookOver = true;
+    selectTab(tab.dataset.tab);
+  }));
+  tabs.forEach(tab => tab.addEventListener('keydown', e => {
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    const i = tabs.indexOf(tab);
+    const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+    selectTab(next.dataset.tab, true);
+    next.click();
+  }));
+  $('#replay').addEventListener('click', play);
+
+  if (reduce) {
+    apply(PHASES.length - 1);
+  } else {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting && !userTookOver) { play(); io.disconnect(); }
+      });
+    }, { threshold: 0.35 });
+    io.observe(stage);
+  }
+
+  /* ---------- pipeline ---------- */
+  const steps = $$('.step');
+  const panels = $$('.panel');
+  const notes = [
+    'SQL sits next to the method that uses it — no XML file to hunt down, no namespace to keep in sync.',
+    'The processor parses the SQL, resolves parameter bindings, and checks the result mapping. A typo becomes a build failure, with a line number.',
+    'This is ordinary Java: readable, debuggable, breakpoint-able. Nothing is synthesized when your app boots.',
+    'Startup loads the generated index once. Each call is a prepared statement and a row mapper — no proxy in between.'
+  ];
+  const meta = [['UserMapper.java', 'source'], ['build output', 'javac'], ['UserMapperImpl.java', 'generated'], ['App.java', 'caller']];
+  const pipeFile = $('#pipeFile'), pipeTag = $('#pipeTag'), pipeNote = $('#pipeNote');
+
+  const setStep = (i) => {
+    steps.forEach((s, idx) => {
+      s.setAttribute('aria-selected', String(idx === i));
+      s.tabIndex = idx === i ? 0 : -1;
+    });
+    panels.forEach(p => {
+      const on = Number(p.dataset.panel) === i;
+      p.hidden = !on;
+      if (on) { p.classList.remove('panel'); void p.offsetWidth; p.classList.add('panel'); }
+    });
+    pipeFile.textContent = meta[i][0];
+    pipeTag.textContent = meta[i][1];
+    pipeNote.textContent = notes[i];
+  };
+  steps.forEach((s, i) => {
+    s.addEventListener('click', () => setStep(i));
+    s.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      const dir = (e.key === 'ArrowDown' || e.key === 'ArrowRight') ? 1 : -1;
+      const next = (i + dir + steps.length) % steps.length;
+      setStep(next); steps[next].focus();
+    });
+  });
+
+  /* ---------- compare highlights ---------- */
+  $$('.fact-btn').forEach(btn => {
+    const pane = btn.closest('.pane');
+    const nums = (btn.dataset.lights || '').split(',').filter(Boolean);
+    const lines = nums.map(n => pane.querySelector('.ln[data-l="' + n + '"]')).filter(Boolean);
+    const on = () => { btn.classList.add('is-lit'); lines.forEach(l => l.classList.add('is-lit')); };
+    const off = () => { btn.classList.remove('is-lit'); lines.forEach(l => l.classList.remove('is-lit')); };
+    btn.addEventListener('mouseenter', on);
+    btn.addEventListener('mouseleave', off);
+    btn.addEventListener('focus', on);
+    btn.addEventListener('blur', off);
+    btn.addEventListener('click', () => { lines.forEach(l => l.classList.toggle('is-lit')); btn.classList.toggle('is-lit'); });
+  });
+
+  /* ---------- reveal ---------- */
+  const targets = $$('.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
+    targets.forEach(t => io.observe(t));
+  } else {
+    targets.forEach(t => t.classList.add('in'));
+  }
+})();
+    </script>
   </body>
 </html>

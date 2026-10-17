@@ -201,6 +201,23 @@ async function addStarlightFrontmatter(directory) {
   }
 }
 
+// Starlight renders the frontmatter title as the page H1. The source docs also start with
+// a markdown H1, which produced two H1s per page; drop the duplicate after frontmatter is set.
+async function stripDuplicateH1(directory) {
+  for (const entry of await readdir(directory, {withFileTypes: true})) {
+    const path = resolve(directory, entry.name);
+    if (entry.isDirectory()) {
+      await stripDuplicateH1(path);
+      continue;
+    }
+    if (!/\.(md|mdx)$/.test(entry.name)) continue;
+    const source = await readFile(path, 'utf8');
+    const next = source.replace(/^(---\r?\n[\s\S]*?\r?\n---\r?\n)(?:\s*\n)?#\s+[^\n]*\n+/, '$1');
+    if (next !== source) await writeFile(path, next);
+  }
+}
+
 await addStarlightFrontmatter(targetDocs);
+await stripDuplicateH1(targetDocs);
 
 console.log(`Synced canonical Lynxus Markdown from ${sourceRoot}`);

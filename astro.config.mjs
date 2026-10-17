@@ -26,6 +26,7 @@ export default defineConfig({
     customCss: ['./src/styles/starlight.css'],
     components: {
       Head: './src/components/Head.astro',
+      SiteTitle: './src/components/SiteTitle.astro',
     },
     editLink: {baseUrl: 'https://github.com/lynxus-project/lynxus/edit/main/docs/'},
     pagination: true,
