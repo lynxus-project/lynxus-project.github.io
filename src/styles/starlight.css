@@ -1,24 +1,92 @@
+/* Brand bridge: the docs inherit the landing page's palette and type. */
 :root {
-  --sl-color-accent-low: #102c44;
-  --sl-color-accent: #58bce8;
-  --sl-color-accent-high: #c5efff;
-  --sl-color-white: #f3f8fc;
-  --sl-color-gray-1: #d3e0ea;
-  --sl-color-gray-2: #9eb4c9;
-  --sl-color-gray-3: #668097;
-  --sl-color-gray-4: #29445c;
-  --sl-color-gray-5: #182d41;
-  --sl-color-gray-6: #0d1d30;
-  --sl-color-black: #07111f;
-  --sl-font: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --sl-color-accent-low: #0a2c3f;
+  --sl-color-accent: #6ee7ff;
+  --sl-color-accent-high: #d2f7ff;
+  --sl-color-white: #f2f9ff;
+  --sl-color-gray-1: #e0ebf6;
+  --sl-color-gray-2: #aabed2;
+  --sl-color-gray-3: #7b93a9;
+  --sl-color-gray-4: #2b4359;
+  --sl-color-gray-5: #15283a;
+  --sl-color-gray-6: #0a1421;
+  --sl-color-black: #04070d;
+  --sl-font: "Inter Tight", Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --sl-font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --sl-content-width: 50rem;
 }
 
 :root[data-theme='light'] {
-  --sl-color-accent-low: #dceff8;
-  --sl-color-accent: #1479a8;
-  --sl-color-accent-high: #0b3f58;
+  --sl-color-accent-low: #d6f4ff;
+  --sl-color-accent: #086d8c;
+  --sl-color-accent-high: #063f52;
+  --sl-color-gray-6: #f4f8fb;
+  --sl-color-black: #fbfdff;
 }
 
-.sl-markdown-content img { border: 1px solid var(--sl-color-gray-4); border-radius: .75rem; }
-.sl-markdown-content h1 { letter-spacing: -.04em; }
-.sl-markdown-content h2 { letter-spacing: -.025em; }
+/* Header: hairline, translucent, matches the landing nav */
+header.header {
+  border-bottom: 1px solid var(--sl-color-hairline);
+  backdrop-filter: blur(12px) saturate(140%);
+  background: color-mix(in srgb, var(--sl-color-black) 82%, transparent);
+}
+.site-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--sl-color-white);
+  text-decoration: none;
+}
+.site-title img { width: 20px; height: 20px; }
+.site-title .suffix {
+  color: var(--sl-color-gray-3);
+  font-weight: 500;
+  font-size: var(--sl-text-sm);
+  padding-left: 0.55rem;
+  margin-left: 0.1rem;
+  border-left: 1px solid var(--sl-color-hairline);
+}
+
+/* Typography: tighter display, calmer body */
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3 { letter-spacing: -0.035em; }
+.sl-markdown-content h1 { font-size: clamp(2rem, 4vw, 2.6rem); }
+.sl-markdown-content h2 { margin-top: 2.6em; padding-top: 1.1em; border-top: 1px solid var(--sl-color-hairline); }
+.sl-markdown-content p,
+.sl-markdown-content li { line-height: 1.72; }
+.sl-markdown-content a { text-underline-offset: 0.22em; }
+.sl-markdown-content :not(pre) > code {
+  border: 1px solid var(--sl-color-hairline);
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--sl-color-accent) 7%, transparent);
+}
+.sl-markdown-content img { border: 1px solid var(--sl-color-gray-4); border-radius: 0.75rem; }
+
+/* Code: a quiet window, not a card inside a card */
+.expressive-code .frame {
+  border-radius: 0.7rem;
+  box-shadow: 0 18px 50px -30px rgba(0, 0, 0, 0.8);
+}
+.expressive-code .frame pre { border-radius: 0.7rem; }
+
+/* Sidebar: active item reads like the landing's accent */
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='page']:hover {
+  background: color-mix(in srgb, var(--sl-color-accent) 12%, transparent);
+  color: var(--sl-color-white);
+}
+nav.sidebar a { border-radius: 0.45rem; }
+
+/* Hero/page header: title matches the site's editorial voice */
+.content-panel + .content-panel { border-top-color: var(--sl-color-hairline); }
+
+/* Search dialog and select boxes */
+site-search button[data-open-modal] { border-radius: 0.5rem; }
+
+/* Light mode keeps the same structure */
+:root[data-theme='light'] .sl-markdown-content :not(pre) > code {
+  background: color-mix(in srgb, var(--sl-color-accent) 6%, transparent);
+}
