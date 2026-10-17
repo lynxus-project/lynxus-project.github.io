@@ -45,6 +45,12 @@ jobs:
         run: |
           mvn -pl lynxus-processor -am -DskipTests install
           mvn -pl lynxus-examples/basic-mapper -am -DskipTests compile
+      - name: Check lockfile registry
+        run: |
+          if grep -qE 'mirrors\.cloud\.tencent\.com|registry\.npmmirror\.com' package-lock.json; then
+            echo "::error file=package-lock.json::Resolve tarballs from registry.npmjs.org; runners cannot reach this mirror reliably."
+            exit 1
+          fi
       - run: npm ci
       - name: Build static site
         env:
