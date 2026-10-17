@@ -3,7 +3,7 @@
    Direction: "the build is the hero". Editorial tech, one accent.
    ============================================================ */
 :root{
-  --ink:#04070d;
+  --ink:#05080f;
   --ink-2:#060b14;
   --panel:#0a1321;
   --panel-2:#0c1828;
@@ -39,14 +39,14 @@ body::before{
     linear-gradient(to right,rgba(140,185,240,.055) 1px,transparent 1px),
     linear-gradient(to bottom,rgba(140,185,240,.055) 1px,transparent 1px);
   background-size:88px 88px;
-  -webkit-mask-image:radial-gradient(1100px 640px at 52% -6%,#000 20%,transparent 72%);
-  mask-image:radial-gradient(1100px 640px at 52% -6%,#000 20%,transparent 72%);
+  -webkit-mask-image:radial-gradient(1300px 860px at 50% -4%,#000 26%,transparent 76%);
+  mask-image:radial-gradient(1300px 860px at 50% -4%,#000 26%,transparent 76%);
 }
 body::after{
   content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(900px 520px at 78% -8%,rgba(50,150,255,.13),transparent 62%),
-    radial-gradient(700px 420px at 8% 2%,rgba(110,231,255,.07),transparent 60%);
+    radial-gradient(1200px 720px at 72% -8%,rgba(50,150,255,.11),transparent 66%),
+    radial-gradient(900px 600px at 8% 0%,rgba(110,231,255,.06),transparent 66%);
 }
 main,header,footer{position:relative;z-index:1}
 ::selection{background:rgba(110,231,255,.26);color:#fff}
@@ -130,8 +130,10 @@ h2{text-wrap:balance;font-size:clamp(30px,3.4vw,44px);line-height:1.06;letter-sp
 .hero{position:relative;padding:66px 0 96px;overflow:hidden}
 .hero::before{
   content:"";position:absolute;inset:-160px 0 auto;height:820px;pointer-events:none;
-  background:radial-gradient(520px circle at var(--mx,68%) var(--my,24%),rgba(96,205,255,.13),transparent 62%);
-  transition:background .2s linear;
+  background:
+    radial-gradient(1100px 740px at 46% 32%,rgba(80,160,255,.085),transparent 72%),
+    radial-gradient(720px 520px at 72% 46%,rgba(110,231,255,.06),transparent 72%),
+    radial-gradient(560px circle at var(--mx,68%) var(--my,24%),rgba(110,231,255,.055),transparent 70%);
 }
 .hero-grid{
   position:relative;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
@@ -204,7 +206,7 @@ h1 em{
 .stage{
   position:relative;z-index:1;margin:0;border:1px solid rgba(120,175,225,.22);border-radius:13px;
   background:linear-gradient(180deg,#0a1526 0%,#060d18 100%);
-  box-shadow:0 1px 0 rgba(255,255,255,.07) inset,0 40px 90px -30px rgba(0,0,0,.9),0 0 0 1px rgba(0,0,0,.4);
+  box-shadow:0 1px 0 rgba(255,255,255,.07) inset,0 30px 70px -40px rgba(0,0,0,.55),0 0 0 1px rgba(0,0,0,.35);
   overflow:hidden;
 }
 .stage-top{display:flex;align-items:center;gap:12px;height:42px;padding:0 14px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.018)}
@@ -306,7 +308,7 @@ h1 em{
 .stage-body::-webkit-scrollbar,.pipe-code::-webkit-scrollbar,.pane .code::-webkit-scrollbar{width:7px;height:7px}
 .stage-body::-webkit-scrollbar-thumb,.pipe-code::-webkit-scrollbar-thumb,.pane .code::-webkit-scrollbar-thumb{background:#1b344a;border-radius:4px}
 .stage-body::-webkit-scrollbar-track,.pipe-code::-webkit-scrollbar-track,.pane .code::-webkit-scrollbar-track{background:transparent}
-.stage[data-phase="done"]{border-color:rgba(139,247,192,.24);box-shadow:0 1px 0 rgba(255,255,255,.07) inset,0 40px 90px -30px rgba(0,0,0,.9),0 0 0 1px rgba(139,247,192,.06)}
+.stage[data-phase="done"]{border-color:rgba(139,247,192,.24);box-shadow:0 1px 0 rgba(255,255,255,.07) inset,0 30px 70px -40px rgba(0,0,0,.55),0 0 0 1px rgba(139,247,192,.06)}
 .stage[data-phase="done"] .stage-body{animation:okFlash .9s var(--ease)}
 @keyframes okFlash{0%{background:rgba(139,247,192,.09)}100%{background:rgba(3,8,15,.35)}}
 
