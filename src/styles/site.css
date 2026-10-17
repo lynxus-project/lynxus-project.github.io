@@ -39,18 +39,14 @@ body::before{
     linear-gradient(to right,rgba(140,185,240,.055) 1px,transparent 1px),
     linear-gradient(to bottom,rgba(140,185,240,.055) 1px,transparent 1px);
   background-size:88px 88px;
-  opacity:.55;
+  -webkit-mask-image:radial-gradient(1200px 760px at 50% -6%,#000 20%,transparent 72%);
+  mask-image:radial-gradient(1200px 760px at 50% -6%,#000 20%,transparent 72%);
 }
 body::after{
   content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   background:radial-gradient(1400px 620px at 50% -12%,rgba(70,150,255,.06),transparent 62%);
 }
-/* film grain, kept barely visible */
-html::after{
-  content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.028;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size:140px 140px;
-}
+
 main,header,footer{position:relative;z-index:1}
 ::selection{background:rgba(110,231,255,.26);color:#fff}
 a{color:inherit;text-decoration:none}
