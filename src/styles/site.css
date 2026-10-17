@@ -455,7 +455,6 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
   :root{--max:1360px}
   h1{font-size:clamp(78px,4.6vw,88px)}
   .hero-grid{gap:72px}
-  .strip-inner{max-width:none;padding-left:40px;padding-right:40px}
 }
 @media (min-width:1920px){
   :root{--max:1560px}
