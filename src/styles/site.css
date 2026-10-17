@@ -457,6 +457,23 @@ footer{border-top:1px solid var(--line);padding:34px 0 40px}
   .first-screen > .hero > .wrap{width:100%}
 }
 
+/* Desktop with enough height: every section owns one screen. */
+@media (min-width:900px) and (min-height:900px){
+  .section{
+    display:flex;flex-direction:column;justify-content:center;
+    min-height:calc(100vh - 69px);min-height:calc(100svh - 69px);
+    padding:48px 0;
+  }
+  .section > .wrap{width:100%}
+  .cmp{margin-top:40px}
+  .pane .code{height:224px}
+  .closing{
+    display:flex;flex-direction:column;justify-content:center;
+    min-height:calc(100vh - 69px - 97px);min-height:calc(100svh - 69px - 97px);
+    padding:48px 0;
+  }
+}
+
 /* Large screens: grow the frame instead of leaving the design as a narrow column. */
 @media (min-width:1600px){
   :root{--max:1360px}
